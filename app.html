@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=
+    , initial-scale=1.0"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>EE4216 LAB2</title>
+  </head>
+  <body>
+    <div id="app">
+      <table>
+        <tr>
+          <th
+            @click="sortBy = 'id'; isAscendingOrder = !isAscendingOrder; sortTableBy("id")"
+          >
+            ID
+          </th>
+          <th
+            v-bind:class=""
+            @click="sortBy = 'name'; isAscendingOrder = !isAscendingOrder; sortTableBy("name")"
+          >
+            Full Name
+          </th>
+          <th
+            @click="sortBy = 'phone'; isAscendingOrder = !isAscendingOrder; sortTableBy("phone")"
+          >
+            Phone
+          </th>
+        </tr>
+        <tr v-for="item in rows" :key="item.id">
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.phone}}</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      columns: {
+        id: "ID",
+        name: "Full Name",
+        phone: "Phone",
+      },
+      rows: [
+        { id: 1, name: "Test Name 1", phone: "305-917-1301" },
+        {
+          id: 2,
+          name: "Test Name 2",
+          phone: "210-684-8953",
+        },
+        {
+          id: 3,
+          name: "Test Name 3",
+          phone: "765-338-0312",
+        },
+      ],
+      isAscendingOrder: false,
+      sortBy: null,
+    },
+    mounted: function (key) {
+      this.fetchJson("users.json");
+    },
+
+    methods: {
+      fetchJson: async function (name) {
+        console.log(name);
+        fetch(name)
+          .then((res) => res.json())
+          .then((data) => (this.rows = data));
+      },
+      sortTableBy: function () {
+        console.log("called");
+        let dir = this.isAscendingOrder ? 1 : -1;
+        const sortBy = this.sortBy;
+
+        return this.rows.sort((a, b) =>
+          a[sortBy] > b[sortBy] ? 1 * dir : -1 * dir
+        );
+      },
+    },
+  });
+</script>

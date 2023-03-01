@@ -16,20 +16,34 @@
       <table>
         <tr>
           <th
-            @click="sortBy = 'id'; isAscendingOrder = !isAscendingOrder; sortTableBy("id")"
+            @click="sortBy = 'id'; isAscendingOrder = !isAscendingOrder; sortTableBy()"
           >
-            ID
+            <div class="container">
+              <div>ID</div>
+              <div
+                :class="{'arrow-up':isAscendingOrder&& sortBy == 'id', 'arrow-down':!isAscendingOrder&& sortBy == 'id'}"
+              ></div>
+            </div>
           </th>
           <th
-            v-bind:class=""
-            @click="sortBy = 'name'; isAscendingOrder = !isAscendingOrder; sortTableBy("name")"
+            @click="sortBy = 'name'; isAscendingOrder = !isAscendingOrder; sortTableBy()"
           >
-            Full Name
+            <div class="container">
+              <div>Full Name</div>
+              <div
+                :class="{'arrow-up':isAscendingOrder&& sortBy == 'name' , 'arrow-down':!isAscendingOrder&& sortBy == 'name'}"
+              ></div>
+            </div>
           </th>
           <th
-            @click="sortBy = 'phone'; isAscendingOrder = !isAscendingOrder; sortTableBy("phone")"
+            @click="sortBy = 'phone'; isAscendingOrder = !isAscendingOrder; sortTableBy()"
           >
-            Phone
+            <div class="container">
+              <div>Phone</div>
+              <div
+                :class="{'arrow-up':isAscendingOrder&& sortBy == 'phone' , 'arrow-down':!isAscendingOrder&& sortBy == 'phone'}"
+              ></div>
+            </div>
           </th>
         </tr>
         <tr v-for="item in rows" :key="item.id">
